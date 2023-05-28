@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 public class ClientService implements GenericService<Client, Long, ClientDTO> {
 
 	@Autowired
-	ClientRepository repository;
+	private ClientRepository repository;
 
 	@Override
 	public JpaRepository<Client, Long> repository() {

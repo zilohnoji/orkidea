@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.services.ClientService;
 
 @RestController
@@ -14,10 +16,10 @@ import com.donatoordep.orkidea.services.ClientService;
 public class ClientController {
 
 	@Autowired
-	ClientService service;
+	private ClientService service;
 
-	@GetMapping(value = "/", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<String> init() {
-		return ResponseEntity.ok().body("Hello spring REST api");
+	@GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<ClientDTO> findById(@PathVariable(name = "id") Long id) {
+		return ResponseEntity.ok().body(service.findById(id));
 	}
 }
