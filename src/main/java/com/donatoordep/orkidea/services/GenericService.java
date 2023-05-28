@@ -28,4 +28,7 @@ public interface GenericService<E extends ConversibleContract<DTO>, ID, DTO exte
 		return repository().findAll().stream().map(x -> x.fromConvert()).toList();
 	}
 
+	default public void delete(ID id) {
+		repository().deleteById(id);
+	}
 }
