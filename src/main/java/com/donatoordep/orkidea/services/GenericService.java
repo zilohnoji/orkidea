@@ -27,4 +27,5 @@ public interface GenericService<E extends ConversibleContract<DTO>, ID, DTO exte
 	default public List<DTO> getAll() {
 		return repository().findAll().stream().map(x -> x.fromConvert()).toList();
 	}
+
 }

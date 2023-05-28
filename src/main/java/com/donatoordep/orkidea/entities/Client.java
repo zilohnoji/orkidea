@@ -1,6 +1,7 @@
 package com.donatoordep.orkidea.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import com.donatoordep.orkidea.dto.ClientDTO;
@@ -12,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @Entity
 public class Client implements Serializable, ConversibleContract<ClientDTO> {
@@ -40,6 +43,10 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Column(nullable = false, unique = false)
 	private Double balance;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = false, unique = false)
+	public LocalDateTime dateRegister = LocalDateTime.now();
+
 	public Client() {
 	}
 
@@ -51,6 +58,22 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 		this.balance = dto.getBalance();
 		this.gender = dto.getGender();
 		this.password = dto.getPassword();
+	}
+
+	public Client(Long id, String email, Gender gender, String name, String password, String cpf, Double balance,
+			LocalDateTime dateRegister) {
+		this.id = id;
+		this.email = email;
+		this.gender = gender;
+		this.name = name;
+		this.password = password;
+		this.cpf = cpf;
+		this.balance = balance;
+		this.dateRegister = dateRegister;
+	}
+
+	public LocalDateTime getDateRegister() {
+		return dateRegister;
 	}
 
 	public String getName() {

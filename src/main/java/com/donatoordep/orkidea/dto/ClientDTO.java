@@ -1,5 +1,8 @@
 package com.donatoordep.orkidea.dto;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import com.donatoordep.orkidea.entities.Client;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
@@ -13,6 +16,7 @@ public class ClientDTO implements ConversibleContract<Client> {
 	private String password;
 	private String cpf;
 	private Double balance;
+	public LocalDateTime dateRegister;
 
 	public ClientDTO() {
 	}
@@ -25,6 +29,23 @@ public class ClientDTO implements ConversibleContract<Client> {
 		this.balance = client.getBalance();
 		this.gender = client.getGender();
 		this.password = client.getPassword();
+		this.dateRegister = client.getDateRegister();
+	}
+
+	public ClientDTO(Long id, String email, Gender gender, String name, String password, String cpf, Double balance,
+			LocalDateTime dateRegister) {
+		this.id = id;
+		this.email = email;
+		this.gender = gender;
+		this.name = name;
+		this.password = password;
+		this.cpf = cpf;
+		this.balance = balance;
+		this.dateRegister = dateRegister;
+	}
+
+	public LocalDateTime getDateRegister() {
+		return dateRegister;
 	}
 
 	public String getName() {
@@ -86,6 +107,32 @@ public class ClientDTO implements ConversibleContract<Client> {
 	@Override
 	public Client fromConvert() {
 		return new Client(this);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(balance, cpf, dateRegister, email, gender, id, name, password);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ClientDTO other = (ClientDTO) obj;
+		return Objects.equals(balance, other.balance) && Objects.equals(cpf, other.cpf)
+				&& Objects.equals(dateRegister, other.dateRegister) && Objects.equals(email, other.email)
+				&& gender == other.gender && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(password, other.password);
+	}
+
+	@Override
+	public String toString() {
+		return "ClientDTO [id=" + id + ", email=" + email + ", gender=" + gender + ", name=" + name + ", password="
+				+ password + ", cpf=" + cpf + ", balance=" + balance + ", dateRegister=" + dateRegister + "]";
 	}
 
 }
