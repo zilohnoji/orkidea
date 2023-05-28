@@ -3,7 +3,9 @@ package com.donatoordep.orkidea.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.gender.Gender;
+import com.donatoordep.orkidea.utils.ConversibleContract;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,7 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Client implements Serializable {
+public class Client implements Serializable, ConversibleContract<ClientDTO> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +27,9 @@ public class Client implements Serializable {
 	private Double balance;
 
 	public Client() {
+	}
+
+	public Client(ClientDTO dto) {
 	}
 
 	public Double getBalance() {
@@ -96,6 +101,11 @@ public class Client implements Serializable {
 	@Override
 	public String toString() {
 		return "Client [id=" + id + ", email=" + email + ", password=" + password + ", cpf=" + cpf + "]";
+	}
+
+	@Override
+	public ClientDTO fromConvert() {
+		return new ClientDTO(this);
 	}
 
 }
