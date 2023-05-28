@@ -1,14 +1,15 @@
 package com.donatoordep.orkidea.dto;
 
 import com.donatoordep.orkidea.entities.Client;
-import com.donatoordep.orkidea.gender.Gender;
 import com.donatoordep.orkidea.utils.ConversibleContract;
+import com.donatoordep.orkidea.utils.Gender;
 
 public class ClientDTO implements ConversibleContract<Client> {
 
 	public Long id;
 	public String email;
 	public Gender gender;
+	public String name;
 	private String password;
 	private String cpf;
 	private Double balance;
@@ -17,6 +18,21 @@ public class ClientDTO implements ConversibleContract<Client> {
 	}
 
 	public ClientDTO(Client client) {
+		this.email = client.getEmail();
+		this.name = client.getName();
+		this.cpf = client.getCpf();
+		this.id = client.getId();
+		this.balance = client.getBalance();
+		this.gender = client.getGender();
+		this.password = client.getPassword();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Double getBalance() {

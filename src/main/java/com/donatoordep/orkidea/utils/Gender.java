@@ -1,4 +1,4 @@
-package com.donatoordep.orkidea.gender;
+package com.donatoordep.orkidea.utils;
 
 public enum Gender {
 	MALE,

@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.donatoordep.orkidea.dto.ClientDTO;
-import com.donatoordep.orkidea.gender.Gender;
 import com.donatoordep.orkidea.utils.ConversibleContract;
+import com.donatoordep.orkidea.utils.Gender;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,16 +21,44 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long id;
+
+	@Column(nullable = false, unique = true, length = 50)
 	public String email;
+
+	@Column(nullable = false, unique = false, length = 1)
 	public Gender gender;
+
+	@Column(nullable = false, unique = false, length = 100)
+	public String name;
+
+	@Column(nullable = false, unique = false, length = 100)
 	private String password;
+
+	@Column(nullable = true, unique = true, length = 14)
 	private String cpf;
+
+	@Column(nullable = false, unique = false)
 	private Double balance;
 
 	public Client() {
 	}
 
 	public Client(ClientDTO dto) {
+		this.email = dto.getEmail();
+		this.name = dto.getName();
+		this.cpf = dto.getCpf();
+		this.id = dto.getId();
+		this.balance = dto.getBalance();
+		this.gender = dto.getGender();
+		this.password = dto.getPassword();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Double getBalance() {
