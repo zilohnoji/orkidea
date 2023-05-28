@@ -13,6 +13,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -46,6 +48,10 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, unique = false)
 	public LocalDateTime dateRegister = LocalDateTime.now();
+
+	@OneToOne
+	@JoinColumn(name = "cart_id")
+	public Cart cart;
 
 	public Client() {
 	}
