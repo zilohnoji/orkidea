@@ -2,19 +2,21 @@ package com.donatoordep.orkidea.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -49,9 +51,9 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Column(nullable = false, unique = false)
 	public LocalDateTime dateRegister = LocalDateTime.now();
 
-	@OneToOne
-	@JoinColumn(name = "cart_id")
-	public Cart cart;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id")
+	public List<Product> productList;
 
 	public Client() {
 	}
@@ -66,20 +68,16 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 		this.password = dto.getPassword();
 	}
 
-	public Client(Long id, String email, Gender gender, String name, String password, String cpf, Double balance,
-			LocalDateTime dateRegister) {
-		this.id = id;
-		this.email = email;
-		this.gender = gender;
-		this.name = name;
-		this.password = password;
-		this.cpf = cpf;
-		this.balance = balance;
-		this.dateRegister = dateRegister;
-	}
-
 	public LocalDateTime getDateRegister() {
 		return dateRegister;
+	}
+
+	public List<Product> getProduct_list() {
+		return productList;
+	}
+
+	public void setDateRegister(LocalDateTime dateRegister) {
+		this.dateRegister = dateRegister;
 	}
 
 	public String getName() {

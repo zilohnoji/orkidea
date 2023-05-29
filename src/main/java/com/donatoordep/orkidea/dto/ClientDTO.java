@@ -1,9 +1,11 @@
 package com.donatoordep.orkidea.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 import com.donatoordep.orkidea.entities.Client;
+import com.donatoordep.orkidea.entities.Product;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
 
@@ -17,6 +19,7 @@ public class ClientDTO implements ConversibleContract<Client> {
 	private String cpf;
 	private Double balance;
 	public LocalDateTime dateRegister;
+	public List<Product> productList;
 
 	public ClientDTO() {
 	}
@@ -30,10 +33,11 @@ public class ClientDTO implements ConversibleContract<Client> {
 		this.gender = client.getGender();
 		this.password = client.getPassword();
 		this.dateRegister = client.getDateRegister();
+		this.productList = client.getProduct_list();
 	}
 
 	public ClientDTO(Long id, String email, Gender gender, String name, String password, String cpf, Double balance,
-			LocalDateTime dateRegister) {
+			LocalDateTime dateRegister, List<Product> productList) {
 		this.id = id;
 		this.email = email;
 		this.gender = gender;
@@ -42,6 +46,11 @@ public class ClientDTO implements ConversibleContract<Client> {
 		this.cpf = cpf;
 		this.balance = balance;
 		this.dateRegister = dateRegister;
+		this.productList = productList;
+	}
+
+	public List<Product> getProductList() {
+		return productList;
 	}
 
 	public LocalDateTime getDateRegister() {

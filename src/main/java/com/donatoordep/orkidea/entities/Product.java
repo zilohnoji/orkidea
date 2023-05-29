@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.CascadeType;
+import com.donatoordep.orkidea.dto.ProductDTO;
+import com.donatoordep.orkidea.utils.ConversibleContract;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
 @Entity
-public class Product implements Serializable {
+public class Product implements Serializable, ConversibleContract<ProductDTO> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,10 +26,22 @@ public class Product implements Serializable {
 	public Double value;
 	public String description;
 
-	@ManyToMany(mappedBy = "products", cascade = CascadeType.ALL)
-	public List<Cart> cart;
+	@ManyToMany(mappedBy = "productList")
+	public List<Client> client;
 
 	public Product() {
+	}
+
+	public Product(ProductDTO dto) {
+		this.id = dto.getId();
+		this.name = dto.getName();
+		this.description = dto.getDescription();
+		this.value = dto.getValue();
+		this.client = dto.getClient();
+	}
+
+	public List<Client> getClient() {
+		return client;
 	}
 
 	public Long getId() {
@@ -83,6 +97,11 @@ public class Product implements Serializable {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", value=" + value + ", description=" + description + "]";
+	}
+
+	@Override
+	public ProductDTO fromConvert() {
+		return new ProductDTO(this);
 	}
 
 }
