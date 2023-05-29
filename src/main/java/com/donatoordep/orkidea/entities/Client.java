@@ -2,6 +2,7 @@ package com.donatoordep.orkidea.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,13 +10,12 @@ import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -51,9 +51,9 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Column(nullable = false, unique = false)
 	public LocalDateTime dateRegister = LocalDateTime.now();
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "product_id")
-	public List<Product> productList;
+	@ManyToMany
+	@JoinTable(name = "product_id")
+	public List<Product> productList = new ArrayList<>();
 
 	public Client() {
 	}
@@ -86,6 +86,14 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public List<Product> getProductList() {
+		return productList;
+	}
+
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
 	}
 
 	public Double getBalance() {

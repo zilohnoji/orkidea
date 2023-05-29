@@ -1,6 +1,7 @@
 package com.donatoordep.orkidea.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class ClientDTO implements ConversibleContract<Client> {
 	private String cpf;
 	private Double balance;
 	public LocalDateTime dateRegister;
-	public List<Product> productList;
+	public List<Product> productList = new ArrayList<>();
 
 	public ClientDTO() {
 	}
@@ -141,7 +142,8 @@ public class ClientDTO implements ConversibleContract<Client> {
 	@Override
 	public String toString() {
 		return "ClientDTO [id=" + id + ", email=" + email + ", gender=" + gender + ", name=" + name + ", password="
-				+ password + ", cpf=" + cpf + ", balance=" + balance + ", dateRegister=" + dateRegister + "]";
+				+ password + ", cpf=" + cpf + ", balance=" + balance + ", dateRegister=" + dateRegister
+				+ ", productList=" + productList + "]";
 	}
 
 }

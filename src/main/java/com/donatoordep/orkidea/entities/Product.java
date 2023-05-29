@@ -1,6 +1,7 @@
 package com.donatoordep.orkidea.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,7 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 	public String description;
 
 	@ManyToMany(mappedBy = "productList")
-	public List<Client> client;
+	public List<Client> client = new ArrayList<>();
 
 	public Product() {
 	}
@@ -54,6 +55,10 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setClient(List<Client> client) {
+		this.client = client;
 	}
 
 	public void setName(String name) {

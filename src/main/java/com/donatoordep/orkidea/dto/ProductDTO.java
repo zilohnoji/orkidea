@@ -66,4 +66,10 @@ public class ProductDTO implements ConversibleContract<Product> {
 		return new Product(this);
 	}
 
+	@Override
+	public String toString() {
+		return "ProductDTO [id=" + id + ", name=" + name + ", value=" + value + ", description=" + description
+				+ ", client=" + client + "]";
+	}
+
 }
