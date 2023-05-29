@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.donatoordep.orkidea.dto.ClientDTO;
-import com.donatoordep.orkidea.dto.ProductDTO;
 import com.donatoordep.orkidea.services.ClientService;
 import com.donatoordep.orkidea.services.ProductService;
 
@@ -67,9 +66,8 @@ public class ClientController {
 			@RequestParam(name = "product-id") Long productId) {
 
 		ClientDTO dto = service.findById(id);
-		ProductDTO proDto = productService.findById(productId);
+		dto.getProductList().add(productService.findById(productId).fromConvert());
 
-		dto.getProductList().add(proDto.fromConvert());
 		service.insert(dto);
 
 		System.out.println(dto);

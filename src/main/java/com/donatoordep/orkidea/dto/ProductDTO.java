@@ -1,5 +1,6 @@
 package com.donatoordep.orkidea.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.donatoordep.orkidea.entities.Client;
@@ -10,9 +11,9 @@ public class ProductDTO implements ConversibleContract<Product> {
 	public Long id;
 
 	public String name;
-	public Double value;
+	public Double price;
 	public String description;
-	public List<Client> client;
+	public List<Client> client = new ArrayList<>();
 
 	public ProductDTO() {
 	}
@@ -21,7 +22,7 @@ public class ProductDTO implements ConversibleContract<Product> {
 		this.id = entity.getId();
 		this.name = entity.getName();
 		this.description = entity.getDescription();
-		this.value = entity.getValue();
+		this.price = entity.getPrice();
 		this.client = entity.getClient();
 	}
 
@@ -45,12 +46,12 @@ public class ProductDTO implements ConversibleContract<Product> {
 		this.name = name;
 	}
 
-	public Double getValue() {
-		return value;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public String getDescription() {
@@ -68,7 +69,7 @@ public class ProductDTO implements ConversibleContract<Product> {
 
 	@Override
 	public String toString() {
-		return "ProductDTO [id=" + id + ", name=" + name + ", value=" + value + ", description=" + description
+		return "ProductDTO [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description
 				+ ", client=" + client + "]";
 	}
 

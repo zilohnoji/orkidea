@@ -9,10 +9,12 @@ import java.util.Objects;
 import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -53,7 +55,8 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	@Column(nullable = false, unique = false)
 	public LocalDateTime dateRegister = LocalDateTime.now();
 
-	@ManyToMany(cascade = CascadeType.ALL)
+	@JsonIgnore
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	@JoinTable(name = "product_client", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	public List<Product> productList = new ArrayList<>();
 
@@ -68,6 +71,7 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 		this.balance = dto.getBalance();
 		this.gender = dto.getGender();
 		this.password = dto.getPassword();
+		this.productList = dto.getProductList();
 	}
 
 	public LocalDateTime getDateRegister() {

@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import com.donatoordep.orkidea.dto.ProductDTO;
 import com.donatoordep.orkidea.utils.ConversibleContract;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,9 +25,10 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 	public Long id;
 
 	public String name;
-	public Double value;
+	public Double price;
 	public String description;
 
+	@JsonIgnore
 	@ManyToMany(mappedBy = "productList")
 	public List<Client> client = new ArrayList<>();
 
@@ -37,7 +39,7 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 		this.id = dto.getId();
 		this.name = dto.getName();
 		this.description = dto.getDescription();
-		this.value = dto.getValue();
+		this.price = dto.getPrice();
 		this.client = dto.getClient();
 	}
 
@@ -65,12 +67,12 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 		this.name = name;
 	}
 
-	public Double getValue() {
-		return value;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setValue(Double value) {
-		this.value = value;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public String getDescription() {
@@ -83,7 +85,7 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, id, name, value);
+		return Objects.hash(description, id, name, price);
 	}
 
 	@Override
@@ -96,12 +98,12 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 			return false;
 		Product other = (Product) obj;
 		return Objects.equals(description, other.description) && Objects.equals(id, other.id)
-				&& Objects.equals(name, other.name) && Objects.equals(value, other.value);
+				&& Objects.equals(name, other.name) && Objects.equals(price, other.price);
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", value=" + value + ", description=" + description + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + ", description=" + description + "]";
 	}
 
 	@Override
