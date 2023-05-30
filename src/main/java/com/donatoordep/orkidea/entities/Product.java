@@ -27,6 +27,7 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 	public String name;
 	public Double price;
 	public String description;
+	public Integer quantity;
 
 	@JsonIgnore
 	@ManyToMany(mappedBy = "productList")
@@ -41,6 +42,7 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 		this.description = dto.getDescription();
 		this.price = dto.getPrice();
 		this.client = dto.getClient();
+		this.quantity = dto.getQuantity();
 	}
 
 	public List<Client> getClient() {
@@ -49,6 +51,14 @@ public class Product implements Serializable, ConversibleContract<ProductDTO> {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public void setId(Long id) {

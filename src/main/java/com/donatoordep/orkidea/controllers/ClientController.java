@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.services.ClientService;
-import com.donatoordep.orkidea.services.ProductService;
 
 @RestController
 @RequestMapping("/client/v1")
@@ -25,9 +25,6 @@ public class ClientController {
 
 	@Autowired
 	private ClientService serviceClient;
-
-	@Autowired
-	private ProductService serviceProduct;
 
 	@GetMapping(path = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<ClientDTO> findById(@PathVariable(name = "id") Long id) {
@@ -61,12 +58,19 @@ public class ClientController {
 				: ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
-	@PutMapping(path = "/buy/{id}/{product_id}")
-	public ResponseEntity<ClientDTO> addProductCart(@PathVariable(name = "id") Long id,
-			@PathVariable(name = "product_id") Long productId) {
+	@PostMapping(path = "/add/{id}/{product_id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<ClientDTO> addProductCart(@PathVariable(name = "id") Long clientId,
+			@PathVariable(name = "product_id") Long productId, @RequestParam(name = "quantity") Integer quantity) {
+		return (serviceClient.addCart(productId, clientId, quantity) != null)
+				? ResponseEntity.ok().body(serviceClient.addCart(productId, clientId, quantity))
+				: ResponseEntity.status(HttpStatus.CONFLICT).build();
+	}
 
-		ClientDTO dtoClient = serviceClient.findById(id);
-		dtoClient.getProductList().add(serviceProduct.findById(productId).fromConvert());
-		return ResponseEntity.ok().body(serviceClient.insert(dtoClient));
+	@PutMapping(path = "/buy/{id}/{product_id}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<ClientDTO> buyProduct(@PathVariable(name = "id") Long idClient,
+			@PathVariable(name = "product_id") Long idProduct) {
+		return (serviceClient.buyProduct(idProduct, idClient) != null)
+				? ResponseEntity.ok().body(serviceClient.buyProduct(idProduct, idClient))
+				: ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 }

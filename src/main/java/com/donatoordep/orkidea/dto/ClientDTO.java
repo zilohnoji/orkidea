@@ -50,6 +50,10 @@ public class ClientDTO implements ConversibleContract<Client> {
 		this.productList = productList;
 	}
 
+	public void setProductList(List<Product> productList) {
+		this.productList = productList;
+	}
+
 	public List<Product> getProductList() {
 		return productList;
 	}
@@ -112,6 +116,10 @@ public class ClientDTO implements ConversibleContract<Client> {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public void buy(Double value, Integer quantity) {
+		this.balance -= (value * quantity);
 	}
 
 	@Override

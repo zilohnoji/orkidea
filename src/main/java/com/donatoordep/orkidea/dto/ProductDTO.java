@@ -13,6 +13,7 @@ public class ProductDTO implements ConversibleContract<Product> {
 	public String name;
 	public Double price;
 	public String description;
+	public Integer quantity;
 	public List<Client> client = new ArrayList<>();
 
 	public ProductDTO() {
@@ -24,10 +25,19 @@ public class ProductDTO implements ConversibleContract<Product> {
 		this.description = entity.getDescription();
 		this.price = entity.getPrice();
 		this.client = entity.getClient();
+		this.quantity = entity.getQuantity();
 	}
 
 	public List<Client> getClient() {
 		return client;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 	public Long getId() {

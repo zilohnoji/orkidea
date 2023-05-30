@@ -56,7 +56,7 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 	public LocalDateTime dateRegister = LocalDateTime.now();
 
 	@JsonIgnore
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY)
 	@JoinTable(name = "product_client", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	public List<Product> productList = new ArrayList<>();
 
@@ -148,6 +148,12 @@ public class Client implements Serializable, ConversibleContract<ClientDTO> {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public void buy(Double value, Integer quantity) {
+		if (!((value * quantity) > this.balance)){
+			this.balance -= (value * quantity);
+		}
 	}
 
 	@Override
