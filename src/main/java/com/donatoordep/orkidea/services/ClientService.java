@@ -1,5 +1,7 @@
 package com.donatoordep.orkidea.services;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
@@ -9,8 +11,6 @@ import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.dto.ProductDTO;
 import com.donatoordep.orkidea.entities.Client;
 import com.donatoordep.orkidea.repositories.ClientRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
@@ -58,5 +58,7 @@ public class ClientService implements GenericService<Client, Long, ClientDTO> {
 			return null;
 		}
 	}
+	
+	
 
 }

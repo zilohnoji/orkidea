@@ -2,13 +2,13 @@ package com.donatoordep.orkidea.services;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.donatoordep.orkidea.utils.ConversibleContract;
-
-import jakarta.transaction.Transactional;
 
 @Service
 @Transactional

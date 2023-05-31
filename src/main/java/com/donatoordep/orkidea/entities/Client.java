@@ -6,6 +6,23 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ConstraintMode;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,23 +30,6 @@ import com.donatoordep.orkidea.dto.ClientDTO;
 import com.donatoordep.orkidea.utils.ConversibleContract;
 import com.donatoordep.orkidea.utils.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.ConstraintMode;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
 public class Client implements ConversibleContract<ClientDTO>, UserDetails {
@@ -58,7 +58,6 @@ public class Client implements ConversibleContract<ClientDTO>, UserDetails {
 	@Column(nullable = false, unique = false)
 	private Double balance;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable = false, unique = false)
 	public LocalDateTime dateRegister = LocalDateTime.now();
 
@@ -69,11 +68,11 @@ public class Client implements ConversibleContract<ClientDTO>, UserDetails {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "client_role", uniqueConstraints = @UniqueConstraint(columnNames = { "client_id",
-			"role_id" }, name = "unique_role_client"), 
-	joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id", table = "client", 
-	foreignKey = @jakarta.persistence.ForeignKey(name = "client_fk", 
-	value = ConstraintMode.CONSTRAINT)), inverseJoinColumns = @JoinColumn(name = "role_id", 
-	referencedColumnName = "id", table = "role", foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
+			"role_id" }, name = "unique_role_client"), joinColumns = @JoinColumn(name = "client_id", referencedColumnName = "id", table = "client", 
+			unique = false, 
+			foreignKey = @ForeignKey(name = "client_fk", value = ConstraintMode.CONSTRAINT)), 
+			inverseJoinColumns = @JoinColumn(name = "role_id", unique = false, updatable = false, referencedColumnName = "id", table = "role", 
+			foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
 	private List<Role> roles;
 
 	public Client() {
